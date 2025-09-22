@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Redirect</title>
-  <script>
-    (function() {
-      const services = {
-        a: { name: "api", enabled: true,  port: 3015 },
-        s: { name: "socket", enabled: false, port: 6969 },
-        r: { name: "redirects", enabled: true, port: 6767 },
-        u: { name: "uploader", enabled: true, port: 9005 },
-        h: { name: "haste", enabled: true, port: 7777 },
-        p: { name: "prometheus", enabled: false, port: 2121 }
-      };
+    <meta charset="UTF-8">
+    <title>Redirect</title>
+    <script>
+        (function () {
+            const services = {
+                a: { name: "api", enabled: true, port: 3015 },
+                s: { name: "socket", enabled: false, port: 6969 },
+                r: { name: "redirects", enabled: true, port: 6767 },
+                u: { name: "uploader", enabled: true, port: 9005 },
+                h: { name: "haste", enabled: true, port: 7777 },
+                p: { name: "prometheus", enabled: false, port: 2121 }
+            };
 
-      const path = window.location.pathname;
-      const match = path.match(/^\/([a-z])(?:\/([A-Za-z0-9]+))?/);
+            const path = window.location.pathname;
+            const match = path.match(/^\/([a-z])\/([A-Za-z0-9]+)/);
 
-      if (match) {
-        const prefix = match[1];
-        const key = match[2] || "";
-        const service = services[prefix];
+            if (match) {
+                const prefix = match[1];
+                const key = match[2];
+                const service = services[prefix];
 
-        if (service && service.enabled) {
-          const target = key
-            ? `http://localhost:${service.port}/${key}`
-            : `http://localhost:${service.port}/`;
-          window.location.href = target;
-          return;
-        }
-      }
+                if (service && service.enabled) {
+                    window.location.href = `http://localhost:${service.port}/${key}`;
+                    return;
+                }
+            }
 
-      document.body.innerText = "No redirect rule matched or service disabled.";
-    })();
-  </script>
+            window.location.href = "https://potat.app";
+        })();
+    </script>
 </head>
+
 <body>
 </body>
+
 </html>
